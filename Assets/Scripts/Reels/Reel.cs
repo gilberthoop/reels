@@ -115,13 +115,8 @@ public class Reel : MonoBehaviour
         // Apply easing to the icon's landing animation
         landingPos = Mathf.SmoothDamp(currentYpos, endPoint, ref yVelocity, smoothTime);
 
-        // Start landing animation REMOVE
-        while (currentYpos > landingPos)
-        {
-            RenderIcons(currentYpos - landingPos);
-
-            landingPos = currentYpos;
-        }
+        // Start landing animation   
+        RenderIcons(currentYpos - landingPos);
     }
 
 

@@ -57,9 +57,7 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             { 
                 Stop();   
             }
-        }
-        
-        
+        }  
     }  
 
 
@@ -86,15 +84,13 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             // Change button frame 
             gameObject.GetComponent<SpriteRenderer>().sprite = stopSpin;
-            spinStatus = true;
-
+            spinStatus = true; 
         }
         else
         {
             // Change button frame
             gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
-            spinStatus = false;
-
+            spinStatus = false; 
         }
     }
 

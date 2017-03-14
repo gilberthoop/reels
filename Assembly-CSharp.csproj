@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Controller\GameController.cs" />
-     <Compile Include="Assets\Scripts\Controller\SpinController.cs" />
      <Compile Include="Assets\Scripts\Dash\SpinButton.cs" />
      <Compile Include="Assets\Scripts\Reels\Reel.cs" />
      <Compile Include="Assets\Scripts\Reels\Reels.cs" />

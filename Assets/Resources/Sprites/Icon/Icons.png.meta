@@ -1,0 +1,460 @@
+fileFormatVersion: 2
+guid: c6ac1b875512c3d4b8de62295c65e8bb
+timeCreated: 1488327340
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: static_B1
+    21300002: static_F5
+    21300004: static_F6
+    21300006: static_F7
+    21300008: static_F8
+    21300010: static_F9
+    21300012: static_FA
+    21300014: static_FGB1
+    21300016: static_FGF5
+    21300018: static_FGF6
+    21300020: static_FGF7
+    21300022: static_FGF8
+    21300024: static_FGF9
+    21300026: static_FGFA
+    21300028: static_FGM1
+    21300030: static_FGM2
+    21300032: static_FGM3
+    21300034: static_FGM4
+    21300036: static_FGW2
+    21300038: static_FGW3
+    21300040: static_FGW4
+    21300042: static_FGW5
+    21300044: static_FGWW
+    21300046: static_M1
+    21300048: static_M2
+    21300050: static_M3
+    21300052: static_M4
+    21300054: static_WW
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: static_B1
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1126
+        width: 404
+        height: 293
+      alignment: 9
+      pivot: {x: 0.5, y: 0.50511944}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_F5
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 1118
+        width: 307
+        height: 301
+      alignment: 9
+      pivot: {x: 0.49837133, y: 0.5116279}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_F6
+      rect:
+        serializedVersion: 2
+        x: 1532
+        y: 1176
+        width: 382
+        height: 243
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5473251}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_F7
+      rect:
+        serializedVersion: 2
+        x: 1018
+        y: 610
+        width: 279
+        height: 253
+      alignment: 9
+      pivot: {x: 0.48387095, y: 0.45849803}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_F8
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 855
+        width: 288
+        height: 269
+      alignment: 9
+      pivot: {x: 0.49305555, y: 0.4684015}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_F9
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 586
+        width: 270
+        height: 267
+      alignment: 9
+      pivot: {x: 0.4925926, y: 0.47565544}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FA
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 578
+        width: 268
+        height: 238
+      alignment: 9
+      pivot: {x: 0.5, y: 0.46638656}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGB1
+      rect:
+        serializedVersion: 2
+        x: 1126
+        y: 1126
+        width: 404
+        height: 293
+      alignment: 9
+      pivot: {x: 0.5, y: 0.50511944}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGF5
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 818
+        width: 315
+        height: 298
+      alignment: 9
+      pivot: {x: 0.4952381, y: 0.5067114}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGF6
+      rect:
+        serializedVersion: 2
+        x: 1532
+        y: 927
+        width: 378
+        height: 247
+      alignment: 9
+      pivot: {x: 0.50793654, y: 0.55870444}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGF7
+      rect:
+        serializedVersion: 2
+        x: 1303
+        y: 681
+        width: 281
+        height: 244
+      alignment: 9
+      pivot: {x: 0.4911032, y: 0.45901638}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGF8
+      rect:
+        serializedVersion: 2
+        x: 1018
+        y: 865
+        width: 283
+        height: 259
+      alignment: 9
+      pivot: {x: 0.49116609, y: 0.47490346}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGF9
+      rect:
+        serializedVersion: 2
+        x: 1586
+        y: 670
+        width: 265
+        height: 255
+      alignment: 9
+      pivot: {x: 0.49433962, y: 0.4627451}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGFA
+      rect:
+        serializedVersion: 2
+        x: 1299
+        y: 447
+        width: 263
+        height: 232
+      alignment: 9
+      pivot: {x: 0.50190115, y: 0.46551725}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGM1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1733
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGM2
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 1733
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGM3
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 1733
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGM4
+      rect:
+        serializedVersion: 2
+        x: 1223
+        y: 1733
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGW2
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 1733
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGW3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1421
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGW4
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1109
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGW5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 797
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_FGWW
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 485
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_M1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 173
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_M2
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 1421
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_M3
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 1421
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_M4
+      rect:
+        serializedVersion: 2
+        x: 1223
+        y: 1421
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: static_WW
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 1421
+        width: 404
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

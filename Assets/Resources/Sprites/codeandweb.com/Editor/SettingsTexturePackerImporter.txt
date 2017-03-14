@@ -1,0 +1,11 @@
+version: 2
+importPivots: 1
+tpsheetFileNames:
+- Assets/Resources/Sprites/Dash/Dash.tpsheet
+- Assets/Resources/Sprites/Icon/Icons.tpsheet
+textureFileNames:
+- Assets/Resources/Sprites/Dash/Dash.png
+- Assets/Resources/Sprites/Icon/Icons.png
+normalmapFileNames:
+- 
+- 

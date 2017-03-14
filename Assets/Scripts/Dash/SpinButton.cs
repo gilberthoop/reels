@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -26,6 +27,7 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // Flags
     private bool spinStatus;
     private bool stopped;
+    private float delay;
 
 
     // Use this for initialization
@@ -37,6 +39,7 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         // Set initial spin status to false and stopped status to truel
         spinStatus = false;
         stopped = true;
+        delay = 0f;
     }
 
 
@@ -44,20 +47,23 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     void Update()
     {
         /*
+         * Set click delay to 2 seconds between clicks - avoid overlapping call stack
          * If the spin status is true, start spinning
-         * Else start landing and stop
+         * Else execute landing animation when reels are spinning
          */
-        if (spinStatus)
-        { 
-             Spin();     
-        }
-        else
-        { 
-            if (!stopped)
-            { 
-                Stop();   
-            }
-        }  
+        delay += Time.deltaTime;
+
+         if (spinStatus)
+         { 
+              Spin();     
+         }
+         else
+         { 
+             if (!stopped)
+             { 
+                 Stop();   
+             }
+         }  
     }  
 
 
@@ -109,15 +115,20 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             spinStatus = true;  
         }
         /**
-         * When spin button is toggled off, the reels will start to land and change spin button frame
+         * When spin button is toggled off after 2 seconds, the reels will start to land and change spin button frame
          * Stop event will be dispatched
+         * Reset delay
          * */
         else
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
-            spinStatus = false;
+            if (delay > 2.0f)
+            {
+                gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
+                spinStatus = false;
+                delay = 0f;
+            } 
         }
-        
+        // Indicate that the reels have started to spin
         stopped = false;
     }
 

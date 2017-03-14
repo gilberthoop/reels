@@ -5,6 +5,7 @@ using UnityEngine;
 public class Reel : MonoBehaviour
 {
 
+    // Reel components (icons/sprites)
     public SpriteRenderer[] icons; 
     public Sprite[] symbols;
     
@@ -99,8 +100,9 @@ public class Reel : MonoBehaviour
             }
         }
     }
-     
-    // Stop the reels 
+
+
+    // Start landing animation
     private void ExecuteStop()
     {
         // Get reference to the object
@@ -115,7 +117,7 @@ public class Reel : MonoBehaviour
         // Apply easing to the icon's landing animation
         landingPos = Mathf.SmoothDamp(currentYpos, endPoint, ref yVelocity, smoothTime);
 
-        // Start landing animation   
+        // Gradually decrease idling speed until 0  
         RenderIcons(currentYpos - landingPos);
     }
 
@@ -128,9 +130,9 @@ public class Reel : MonoBehaviour
     }
 
 
+    // Stop the reels
     private void StopSpin()
     {
-        // Start landing animation
         ExecuteStop();
     }
 

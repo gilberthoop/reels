@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    // Spin buttom frames
+    // Spin buttom frames or skins
     public Sprite spinUp;
     public Sprite spinOver;
     public Sprite spinDown;
@@ -64,7 +64,7 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                  Stop();   
              }
          }  
-    }  
+    }
 
 
     // Event system interface implemented when mouse cursor enters the UI object  
@@ -133,6 +133,7 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
 
 
+    // Invoke the spin and stop events
     public void Spin()
     {
         if (OnSpin != null)
@@ -140,8 +141,7 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             OnSpin();
         }
     }
-
-
+    
     public void Stop()
     {
         if (OnStop != null)

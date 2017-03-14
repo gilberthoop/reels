@@ -5,6 +5,7 @@ using UnityEngine;
 public class Reels : MonoBehaviour
 {
 
+    // Reels components
     public Reel[] reels;
 
     private Reel currentReel;
@@ -29,8 +30,7 @@ public class Reels : MonoBehaviour
             currentReel.Stop();
         }
     }
-
-
+     
 
     // PUBLIC METHODS
     public void Spin()

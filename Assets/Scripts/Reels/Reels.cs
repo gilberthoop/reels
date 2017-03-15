@@ -27,10 +27,10 @@ public class Reels : MonoBehaviour
         for (int i = 0; i < reels.Length; i++)
         {
             currentReel = reels[i];
-            currentReel.Stop();
+            currentReel.Stop(); 
         }
-    }
-     
+    } 
+
 
     // PUBLIC METHODS
     public void Spin()
@@ -40,6 +40,7 @@ public class Reels : MonoBehaviour
 
     public void Stop()
     {
-        StopSpin();
-    }
+        StopSpin(); 
+    } 
+
 }

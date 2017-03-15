@@ -28,7 +28,11 @@ public class Reel : MonoBehaviour
     private float yVelocity;
     private float endPoint;
     private float landingPos;  
-    private float currentYpos; 
+    private float currentYpos;
+
+    // Reel status
+    private bool isSpinning;
+    private bool stopped;
 
 
     // Initialize reel components
@@ -40,9 +44,28 @@ public class Reel : MonoBehaviour
         topBound = 6f;
         bottomBound = topBound - iconHeight * 4;
         yVelocity = 0.0f;
+        isSpinning = false;
+        stopped = true;
 
         SetIcon(symbols);
-    } 
+    }
+
+
+    void Update()
+    {
+        if (isSpinning)
+        {
+            StartSpin();
+        }
+        else
+        {
+            if (!stopped)
+            { 
+                StopSpin();
+            }
+        }
+    }
+
 
     // Create initial set of icons
     private void SetIcon(Sprite[] symbol)
@@ -68,6 +91,10 @@ public class Reel : MonoBehaviour
     // Render the set of icons
     private void RenderIcons(float speed)
     {
+        // Indicate that the reels have started to spin
+        isSpinning = true;
+        stopped = false;
+
         for (int i = 0; i < icons.Length; i++)
         {
             // Get reference to the object
@@ -115,10 +142,13 @@ public class Reel : MonoBehaviour
         endPoint = topBound - iconHeight;
 
         // Apply easing to the icon's landing animation
-        landingPos = Mathf.SmoothDamp(currentYpos, endPoint, ref yVelocity, smoothTime);
+        landingPos = Mathf.SmoothDamp(currentYpos, endPoint, ref yVelocity, smoothTime); 
 
-        // Gradually decrease idling speed until 0  
+        // Gradually decrease idling speed until it reaches the "endpoint"  
         RenderIcons(currentYpos - landingPos);
+
+        // Change the reel status to stop
+        isSpinning = false;
     }
 
 
@@ -135,7 +165,7 @@ public class Reel : MonoBehaviour
     {
         ExecuteStop();
     }
-
+     
 
 
     // PUBLIC METHODS
@@ -148,4 +178,5 @@ public class Reel : MonoBehaviour
     {
         StopSpin(); 
     }
+
 }

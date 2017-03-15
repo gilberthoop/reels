@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -15,19 +16,18 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     // Delegates and events
     [HideInInspector]
-    public delegate void ClickToSpin();
+    public delegate void ClickToSpin();  
     [HideInInspector]
     public event ClickToSpin OnSpin;
 
     [HideInInspector]
     public delegate void ClickToStop();
     [HideInInspector]
-    public event ClickToStop OnStop;
+    public event ClickToStop OnStop; 
 
     // Flags
     private bool spinStatus;
-    private bool stopped;
-    private float delay;
+    private bool stopped; 
 
 
     // Use this for initialization
@@ -36,105 +36,62 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         // Render the spin button 
         gameObject.GetComponent<SpriteRenderer>().sprite = spinUp; 
 
-        // Set initial spin status to false and stopped status to truel
+        // Set initial spin status to false and stopped status to true
         spinStatus = false;
-        stopped = true;
-        delay = 0f;
-    }
+        stopped = true; 
+    } 
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        /*
-         * Set click delay to 2 seconds between clicks - avoid overlapping call stack
-         * If the spin status is true, start spinning
-         * Else execute landing animation when reels are spinning
-         */
-        delay += Time.deltaTime;
-
-         if (spinStatus)
-         { 
-              Spin();     
-         }
-         else
-         { 
-             if (!stopped)
-             { 
-                 Stop();   
-             }
-         }  
-    }
-
-
-    // Event system interface implemented when mouse cursor enters the UI object  
+    // Change the button frame when mouse cursor enters the UI object  
     public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (spinStatus)
-        {
-            gameObject.GetComponent<SpriteRenderer>().sprite = stopSpin;
-            spinStatus = true;
-        }
-        else
-        {
-            gameObject.GetComponent<SpriteRenderer>().sprite = spinOver;
-            spinStatus = false;
-        }
+    { 
+        gameObject.GetComponent<SpriteRenderer>().sprite = spinOver;
     }
 
 
-    // Event system interface implemented when mouse cursor exits the UI object
+    // Change the button frame when mouse cursor exits the UI object
     public void OnPointerExit(PointerEventData eventData)
-    {
-        if (spinStatus)
-        {
-            // Change button frame 
-            gameObject.GetComponent<SpriteRenderer>().sprite = stopSpin;
-            spinStatus = true; 
-        }
-        else
-        {
-            // Change button frame
-            gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
-            spinStatus = false; 
-        }
+    { 
+        gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
     }
 
 
-    // Event system interface implemented when mouse cursor clicks the UI object
-    // Dispatch click events
+    // Event system interface implemented when mouse cursor clicks the UI object 
     public void OnPointerClick(PointerEventData eventData)
     {
-        /**
+        /*
          * When spin button is toggled on, the reel will spin and change spin buttom frame
          * Spin event will be dispatched
-         * */
+         */
         if (!spinStatus)
         {
             gameObject.GetComponent<SpriteRenderer>().sprite = stopSpin;
-            spinStatus = true;  
+
+            InvokeSpin();
+
+            spinStatus = true;
         }
-        /**
-         * When spin button is toggled off after 2 seconds, the reels will start to land and change spin button frame
+
+        /*
+         * When spin button is toggled off, the reels will start to land and change spin button frame
          * Stop event will be dispatched
-         * Reset delay
-         * */
+         */
         else
         {
-            if (delay > 2.0f)
-            {
-                gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
-                spinStatus = false;
-                delay = 0f;
-            } 
+            // TODO Disable click  
+            //gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
+
+            InvokeStop();
+
+            spinStatus = false; 
         }
         // Indicate that the reels have started to spin
-        stopped = false;
-    }
+        stopped = false; 
+    } 
 
-
+    
     // Invoke the spin and stop events
-    public void Spin()
+    public void InvokeSpin()
     {
         if (OnSpin != null)
         {
@@ -142,11 +99,12 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
     }
     
-    public void Stop()
+    public void InvokeStop()
     {
         if (OnStop != null)
         {
             OnStop();
         }
     }
+     
 }

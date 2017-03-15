@@ -23,7 +23,12 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [HideInInspector]
     public delegate void ClickToStop();
     [HideInInspector]
-    public event ClickToStop OnStop; 
+    public event ClickToStop OnStop;
+
+    [HideInInspector]
+    public delegate float CheckReels(); 
+    [HideInInspector]
+    public event CheckReels SpinStatus;
 
     // Flags
     private bool spinStatus;
@@ -43,15 +48,33 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     // Change the button frame when mouse cursor enters the UI object  
     public void OnPointerEnter(PointerEventData eventData)
-    { 
-        gameObject.GetComponent<SpriteRenderer>().sprite = spinOver;
+    {
+        /*if (spinStatus)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = stopSpin;
+            spinStatus = true;
+        }
+        else
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = spinOver;
+            spinStatus = false;
+        }*/
     }
 
 
     // Change the button frame when mouse cursor exits the UI object
     public void OnPointerExit(PointerEventData eventData)
-    { 
-        gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
+    {
+        /*if (spinStatus)
+        { 
+            gameObject.GetComponent<SpriteRenderer>().sprite = stopSpin;
+            spinStatus = true; 
+        }
+        else
+        { 
+            gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
+            spinStatus = false; 
+        }*/
     }
 
 
@@ -77,17 +100,28 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
          */
         else
         {
-            // TODO Disable click  
-            //gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
+            // Disable click, wait until the reels have fully stopped  
+            gameObject.GetComponent<SpriteRenderer>().sprite = stopSpin;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
 
             InvokeStop();
+
+            // Wait until the reels have fully stopped 
+            StartCoroutine(WaitAndStop());
 
             spinStatus = false; 
         }
         // Indicate that the reels have started to spin
         stopped = false; 
-    } 
+    }
+
+    // Wait for the landing to finish then enable spin again
+    IEnumerator WaitAndStop()
+    { 
+        yield return new WaitForSeconds(DoneSpin());
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
+    }
 
     
     // Invoke the spin and stop events
@@ -106,5 +140,15 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             OnStop();
         }
     }
-     
+
+    public float DoneSpin()
+    {
+        float result = 0f;
+        if (SpinStatus != null)
+        {
+            result = SpinStatus();
+        }
+        return result;
+    }
+
 }

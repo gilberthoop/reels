@@ -8,28 +8,32 @@ public class GameController : MonoBehaviour
 
     // Game controller components
     public SpinButton spinButton;
-    public Reels reels; 
-
+    public Reels reels;
      
     // Spin the reels
     private void ReelSpinHandler()
     {
         reels.Spin();
     }
-
-
+    
     // Stop the reels
     private void ReelStopHandler()
     {
         reels.Stop();
-    } 
+    }
 
+    // Return the landing time
+    private float FinishSpin()
+    {
+        return reels.DoneSpin();
+    }
 
     // Subscribe handlers to the events
     void OnEnable()
     {
         spinButton.OnSpin += ReelSpinHandler;
-        spinButton.OnStop += ReelStopHandler; 
+        spinButton.OnStop += ReelStopHandler;
+        spinButton.SpinStatus += FinishSpin;
     }
 
 
@@ -37,6 +41,7 @@ public class GameController : MonoBehaviour
     void OnDisable()
     {
         spinButton.OnSpin -= ReelSpinHandler;
-        spinButton.OnStop -= ReelStopHandler; 
+        spinButton.OnStop -= ReelStopHandler;
+        spinButton.SpinStatus -= FinishSpin;
     }
 }

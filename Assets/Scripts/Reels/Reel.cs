@@ -38,8 +38,8 @@ public class Reel : MonoBehaviour
     // Initialize reel components
     void Start()
     {  
-        speed = 50f; 
-        smoothTime = 0.3f;
+        speed = 30f; 
+        smoothTime = 0.5f;
         iconHeight = 3f;
         topBound = 6f;
         bottomBound = topBound - iconHeight * 4;
@@ -148,7 +148,16 @@ public class Reel : MonoBehaviour
         RenderIcons(currentYpos - landingPos);
 
         // Change the reel status to stop
-        isSpinning = false;
+        isSpinning = false; 
+        
+        Debug.Log(landingPos); 
+    }
+
+
+    // Return the time it takes to finish the landing animation
+    private float Done()
+    {
+        return Mathf.Round(landingPos);
     }
 
 
@@ -177,6 +186,10 @@ public class Reel : MonoBehaviour
     public void Stop()
     {
         StopSpin(); 
+    } 
+     
+    public float FinishSpin()
+    {
+        return Done();
     }
-
 }

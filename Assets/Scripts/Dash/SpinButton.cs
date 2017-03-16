@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class SpinButton : MonoBehaviour, IPointerClickHandler
 {
     // Spin buttom frames or skins
     public Sprite spinUp;
@@ -36,7 +36,7 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         // Render the spin button 
         gameObject.GetComponent<SpriteRenderer>().sprite = spinUp; 
@@ -45,38 +45,7 @@ public class SpinButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         spinStatus = false;
         stopped = true; 
     } 
-
-    // Change the button frame when mouse cursor enters the UI object  
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        /*if (spinStatus)
-        {
-            gameObject.GetComponent<SpriteRenderer>().sprite = stopSpin;
-            spinStatus = true;
-        }
-        else
-        {
-            gameObject.GetComponent<SpriteRenderer>().sprite = spinOver;
-            spinStatus = false;
-        }*/
-    }
-
-
-    // Change the button frame when mouse cursor exits the UI object
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        /*if (spinStatus)
-        { 
-            gameObject.GetComponent<SpriteRenderer>().sprite = stopSpin;
-            spinStatus = true; 
-        }
-        else
-        { 
-            gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
-            spinStatus = false; 
-        }*/
-    }
-
+    
 
     // Event system interface implemented when mouse cursor clicks the UI object 
     public void OnPointerClick(PointerEventData eventData)

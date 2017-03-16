@@ -36,7 +36,7 @@ public class Reel : MonoBehaviour
 
 
     // Initialize reel components
-    void Start()
+    void Awake()
     {  
         speed = 30f; 
         smoothTime = 0.5f;
@@ -51,6 +51,7 @@ public class Reel : MonoBehaviour
     }
 
 
+    // Execute spin idling and landing animation controlled by flags
     void Update()
     {
         if (isSpinning)
@@ -61,11 +62,10 @@ public class Reel : MonoBehaviour
         {
             if (!stopped)
             { 
-                StopSpin();
+                StopSpin(); 
             }
         }
-    }
-
+    } 
 
     // Create initial set of icons
     private void SetIcon(Sprite[] symbol)
@@ -142,15 +142,16 @@ public class Reel : MonoBehaviour
         endPoint = topBound - iconHeight;
 
         // Apply easing to the icon's landing animation
-        landingPos = Mathf.SmoothDamp(currentYpos, endPoint, ref yVelocity, smoothTime); 
+        landingPos = Mathf.SmoothDamp(currentYpos, endPoint, ref yVelocity, smoothTime);
 
         // Gradually decrease idling speed until it reaches the "endpoint"  
-        RenderIcons(currentYpos - landingPos);
+        RenderIcons(currentYpos - (landingPos + 0.000001f)); 
+        //RenderIcons(currentYpos - landingPos); 
 
         // Change the reel status to stop
         isSpinning = false; 
         
-        Debug.Log(landingPos); 
+        Debug.Log(currentYpos); 
     }
 
 

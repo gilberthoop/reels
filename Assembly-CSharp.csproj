@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Controller\GameController.cs" />
-     <Compile Include="Assets\Scripts\Dash\SpinButton.cs" />
+     <Compile Include="Assets\Scripts\Dash\Button.cs" />
      <Compile Include="Assets\Scripts\Reels\Reel.cs" />
      <Compile Include="Assets\Scripts\Reels\Reels.cs" />
      <None Include="Assets\Resources\Sprites\codeandweb.com\Editor\SettingsTexturePackerImporter.txt" />

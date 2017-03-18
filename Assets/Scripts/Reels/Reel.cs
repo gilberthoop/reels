@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Policy;
 using UnityEngine;
 
 public class Reel : MonoBehaviour
-{
+{ 
 
+    // Delegates and events
+    public delegate void ReelHandler();  
+    public event ReelHandler ReelStarted;
+    public event ReelHandler ReelStopped;
+     
     // Reel components (icons/sprites)
     public SpriteRenderer[] icons; 
     public Sprite[] symbols;
-    
-
+     
     // Visual 
     private SpriteRenderer currentIcon;
     private int symbolIndex;
@@ -32,20 +37,20 @@ public class Reel : MonoBehaviour
 
     // Reel status
     private bool isSpinning;
-    private bool stopped;
+    private bool stopped; 
 
 
     // Initialize reel components
     void Awake()
     {  
-        speed = 30f; 
-        smoothTime = 0.5f;
+        speed = 25f; 
+        smoothTime = 0.3f;
         iconHeight = 3f;
         topBound = 6f;
         bottomBound = topBound - iconHeight * 4;
         yVelocity = 0.0f;
         isSpinning = false;
-        stopped = true;
+        stopped = true; 
 
         SetIcon(symbols);
     }
@@ -54,15 +59,17 @@ public class Reel : MonoBehaviour
     // Execute spin idling and landing animation controlled by flags
     void Update()
     {
+        // If the spin signal is true, start spinning
         if (isSpinning)
         {
-            StartSpin();
+            Spin();
         }
         else
         {
+            // Check if reels are not stopped, then stop
             if (!stopped)
-            { 
-                StopSpin(); 
+            {  
+                Stop(); 
             }
         }
     } 
@@ -103,19 +110,19 @@ public class Reel : MonoBehaviour
             // Apply speed
             xPos = currentIcon.transform.position.x; 
             yPos = currentIcon.transform.position.y;
-            yPos -= speed;
+            yPos -= speed; 
 
             // Update the icon's new position
             currentIcon.transform.position = new Vector2(xPos, yPos);
 
             // Check bounds
-            if (currentIcon.transform.position.y <= bottomBound )
+            if (currentIcon.transform.position.y < bottomBound)
             {
                 /*
                  * Update current icon position 
                  * Subtract the speed multiplied by the fixed delta time to avoid gaps 
                  */
-                yPos = topBound - (speed * Time.fixedDeltaTime);      
+                yPos = topBound - speed * Time.fixedDeltaTime;      
                 currentIcon.transform.position = new Vector2(xPos, yPos);
 
                 // Store its index
@@ -125,13 +132,19 @@ public class Reel : MonoBehaviour
                 symbolIndex = Random.Range(0, symbols.Length);
                 icons[i].GetComponent<SpriteRenderer>().sprite = symbols[symbolIndex];
             }
+        } 
+
+        // Dispatch START event
+        if (ReelStarted != null)
+        {
+            ReelStarted();
         }
     }
-
+     
 
     // Start landing animation
-    private void ExecuteStop()
-    {
+    private void StartLanding()
+    { 
         // Get reference to the object
         currentIcon = icons[topMostIndex];
 
@@ -144,53 +157,45 @@ public class Reel : MonoBehaviour
         // Apply easing to the icon's landing animation
         landingPos = Mathf.SmoothDamp(currentYpos, endPoint, ref yVelocity, smoothTime);
 
-        // Gradually decrease idling speed until it reaches the "endpoint"  
-        RenderIcons(currentYpos - (landingPos + 0.000001f)); 
-        //RenderIcons(currentYpos - landingPos); 
+        // Gradually decrease idling speed until it reaches the "endpoint"   
+        RenderIcons(currentYpos - landingPos); 
 
         // Change the reel status to stop
-        isSpinning = false; 
-        
-        Debug.Log(currentYpos); 
-    }
+        isSpinning = false;
 
+        //Debug.Log(currentYpos + "       " +  landingPos); 
+        /*
+         * This is the point where the reels have completely landed/stopped
+         * Signal/flag STOP to halt spinning
+         */
+        if (currentYpos == landingPos)
+        { 
+            stopped = true;  
+        } 
 
-    // Return the time it takes to finish the landing animation
-    private float Done()
-    {
-        return Mathf.Round(landingPos);
-    }
-
-
-    // Start idling spin animation
-    private void StartSpin()
-    {
-        // Move icons by speed * fixed delta time
-        RenderIcons(speed * Time.fixedDeltaTime);
-    }
-
-
-    // Stop the reels
-    private void StopSpin()
-    {
-        ExecuteStop();
-    }
-     
+        // Dispatch STOP event
+        if (ReelStopped != null)
+        {
+            ReelStopped();
+        }
+    } 
 
 
     // PUBLIC METHODS
     public void Spin()
     {
-        StartSpin();
+        // Move icons by speed * fixed delta time
+        RenderIcons(speed * Time.fixedDeltaTime);
     }
 
     public void Stop()
     {
-        StopSpin(); 
-    } 
-     
-    public float FinishSpin()
-    {
-        return Done();
+        StartLanding();
     }
+
+    public bool hasStopped()
+    {
+        return stopped;
+    }
+
 }

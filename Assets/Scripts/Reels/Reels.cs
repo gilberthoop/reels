@@ -5,60 +5,98 @@ using UnityEngine;
 public class Reels : MonoBehaviour
 {
 
+    public delegate void ReelsHandler(); 
+    public event ReelsHandler Spinning;
+    public event ReelsHandler Stopping;
+
     // Reels components
     public Reel[] reels;
 
     private Reel currentReel;
 
 
+    void Start()
+    {
+        for (int i = 0; i < reels.Length; i++)
+        {
+            currentReel = reels[i];  
+        }
+    }
+
+
     // Set up the spin idle animation for the reels
-    private void StartSpin()
+    private void ReelStartHandler()
     {
         for (int i = 0; i < reels.Length; i++)
         {
             currentReel = reels[i];
             currentReel.Spin();
         }
-    }
+
+        // Dispatch start event
+        if (Spinning != null)
+        {
+            Spinning();
+        }
+    } 
+
 
     // Set up the landing and stop animation for the reels
-    private void StopSpin()
+    private void ReelStopHandler()
     {
         for (int i = 0; i < reels.Length; i++)
         {
             currentReel = reels[i];
-            currentReel.Stop(); 
+            currentReel.Stop();
+        }
+
+        // Dispatch stop event
+        if (Stopping != null)
+        {
+            Stopping();
         }
     }
 
-    // Return the time it takes to finish the landing animation of each reel
-    private float Done()
+    // Check if reels have stopped
+    private bool IsStopping()
     {
-        float result = 0f;
-
+        bool stopStatus = false;
         for (int i = 0; i < reels.Length; i++)
         {
             currentReel = reels[i];
-            result = currentReel.FinishSpin();
+            stopStatus = currentReel.hasStopped();
         }
-        return result;
+        return stopStatus;
+    }
+     
+
+    void OnEnable()
+    {
+        currentReel.ReelStarted += ReelStartHandler;
+        currentReel.ReelStopped += ReelStopHandler; 
+    } 
+
+    void OnDisable()
+    {  
+        currentReel.ReelStarted -= ReelStartHandler;
+        currentReel.ReelStopped -= ReelStopHandler; 
     }
 
-
+     
     // PUBLIC METHODS
     public void Spin()
     {
-        StartSpin();
+        ReelStartHandler();
     }
 
     public void Stop()
     {
-        StopSpin(); 
+        ReelStopHandler();
     }
 
-    public float DoneSpin()
+    public bool HasStopped()
     {
-        return Done();
+        return IsStopping();
     }
 
 }

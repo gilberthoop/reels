@@ -22,6 +22,11 @@ public class GameController : MonoBehaviour
         reels.Stop += new Reels.ReelsHandler(ReelStopHandler);
     }
 
+    // Check reel landing status on every frame
+    void Update()
+    {
+        ReelStopHandler();
+    }
 
 
     // Button handler for spinning
@@ -45,10 +50,17 @@ public class GameController : MonoBehaviour
         /*
         * While the reels are spinning, disable SPIN button
         * Until the reels have fully stopped
-        */ 
-        StartCoroutine(WaitAndStop());   
+        */   
+        if (!reels.Stopped())
+        {
+            button.Disable();
+        }
+        else
+        {
+            button.Enable();
+        }
     } 
-     
+    
 
     // Unsubscribe handlers to events
     void OnDisable()
@@ -57,18 +69,6 @@ public class GameController : MonoBehaviour
         button.ClickToStop -= ButtonStopHandler;
          
         reels.Stop -= ReelStopHandler;
-    }
-    
-    
-    IEnumerator WaitAndStop()
-    {
-        float duration = reels.GetLandingTime();
-
-        button.Disable();
-
-        yield return new WaitForSeconds(duration);
-        
-        button.Enable(); 
-    }
+    } 
      
 }

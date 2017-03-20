@@ -32,9 +32,7 @@ public class Reel : MonoBehaviour
     private float yVelocity;
     private float endPoint;
     private float landingPos;  
-    private float currentYpos;
-    private float landingTime;
-    private float temp;
+    private float currentYpos; 
 
 
     // Reel status
@@ -52,9 +50,7 @@ public class Reel : MonoBehaviour
         bottomBound = topBound - iconHeight * 4;
         yVelocity = 0.0f;
         isSpinning = false;
-        fullyStopped = true;
-        landingTime = 2.5f;
-        temp = 0f;
+        fullyStopped = true; 
 
         SetIcon(symbols);
     }
@@ -143,8 +139,7 @@ public class Reel : MonoBehaviour
     // Start landing animation
     private void StartLanding()
     {
-        fullyStopped = false;
-        temp += Time.fixedDeltaTime;
+        fullyStopped = false; 
 
         // Get reference to the object
         currentIcon = icons[topMostIndex];
@@ -170,20 +165,15 @@ public class Reel : MonoBehaviour
          */
 
         if (currentYpos == landingPos)
-        {
-            landingTime = temp;
-            temp = 0f;
-
-            fullyStopped = true;
-
-            Debug.Log("STOPPPPPPPPPPPPPPPED");
+        {  
+            fullyStopped = true; 
 
             // Dispatch STOP event
             if (ReelStopped != null)
             {
                 ReelStopped();
-            }
-        }
+            } 
+        } 
     } 
 
     // PUBLIC METHODS
@@ -201,11 +191,6 @@ public class Reel : MonoBehaviour
     public bool HasStopped()
     {
         return fullyStopped;
-    }
-
-    public float GetLandingTime()
-    {
-        return landingTime;
-    }
+    } 
 
 }

@@ -59,13 +59,11 @@ public class GameController : MonoBehaviour
         */   
         if (!reels.Stopped())
         {
-            button.Disable(); 
-            Debug.Log("disable");
+            button.Disable();  
         }
         else
         {
-            button.Enable();
-            Debug.Log("enable");
+            button.Enable(); 
             isClicked = false;
         }
     } 

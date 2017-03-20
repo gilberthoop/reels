@@ -60,10 +60,7 @@ public class Button : MonoBehaviour, IPointerClickHandler
             spinStatus = true;
         }
         else
-        {
-            // Toggle button frame 
-            //gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
-             
+        {  
             // Dispatch stop event when button is clicked
             if (ClickToStop != null)
             {

@@ -99,8 +99,7 @@ public class Reel : MonoBehaviour
     private void RenderIcons(float speed)
     {
         // Indicate that the reels have started to spin
-        isSpinning = true;
-        //fullyStopped = false;
+        isSpinning = true; 
 
         for (int i = 0; i < icons.Length; i++)
         {
@@ -119,10 +118,9 @@ public class Reel : MonoBehaviour
             if (currentIcon.transform.position.y < bottomBound)
             {
                 /*
-                 * Update current icon position 
-                 * Subtract the speed multiplied by the fixed delta time to avoid gaps 
+                 * Update current icon position  
                  */
-                yPos = topBound - speed * Time.fixedDeltaTime;      
+                yPos = topBound - speed;      
                 currentIcon.transform.position = new Vector2(xPos, yPos);
 
                 // Store its index

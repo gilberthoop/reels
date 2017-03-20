@@ -11,21 +11,27 @@ public class GameController : MonoBehaviour
     public Button button;
     public Reels reels;
 
+    private bool isClicked;
+
 
     // Add event listeners
     void Start()
     {
+        isClicked = false;
+
         // Subscribe handlers to events
         button.ClickToSpin += new Button.ButtonHandler(ButtonSpinHandler);
-        button.ClickToStop += new Button.ButtonHandler(ButtonStopHandler);
-         
+        button.ClickToStop += new Button.ButtonHandler(ButtonStopHandler); 
         reels.Stop += new Reels.ReelsHandler(ReelStopHandler);
     }
 
     // Check reel landing status on every frame
     void Update()
     {
-        ReelStopHandler();
+        if (isClicked)
+        {
+            ReelStopHandler();
+        }
     }
 
 
@@ -46,18 +52,21 @@ public class GameController : MonoBehaviour
     // Reel handler when reels are landing/stopping
     private void ReelStopHandler()
     {
-        // NOTHING HAPPENS HERE
+        isClicked = true;
         /*
         * While the reels are spinning, disable SPIN button
         * Until the reels have fully stopped
         */   
         if (!reels.Stopped())
         {
-            button.Disable();
+            button.Disable(); 
+            Debug.Log("disable");
         }
         else
         {
             button.Enable();
+            Debug.Log("enable");
+            isClicked = false;
         }
     } 
     

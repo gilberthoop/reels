@@ -7,8 +7,7 @@ public class Reel : MonoBehaviour
 { 
 
     // Delegates and events
-    public delegate void ReelHandler();  
-    public event ReelHandler ReelStarted;
+    public delegate void ReelHandler();   
     public event ReelHandler ReelStopped;
      
     // Reel components (icons/sprites)
@@ -28,16 +27,19 @@ public class Reel : MonoBehaviour
     private float topBound;
     private float bottomBound;
 
-    // Landing animation  
+    // Landing animation & calculations/timing  
     private int topMostIndex;
     private float yVelocity;
     private float endPoint;
     private float landingPos;  
     private float currentYpos;
+    private float landingTime;
+    private float temp;
+
 
     // Reel status
     private bool isSpinning;
-    private bool stopped; 
+    private bool fullyStopped; 
 
 
     // Initialize reel components
@@ -50,7 +52,9 @@ public class Reel : MonoBehaviour
         bottomBound = topBound - iconHeight * 4;
         yVelocity = 0.0f;
         isSpinning = false;
-        stopped = true; 
+        fullyStopped = true;
+        landingTime = 2.5f;
+        temp = 0f;
 
         SetIcon(symbols);
     }
@@ -67,9 +71,9 @@ public class Reel : MonoBehaviour
         else
         {
             // Check if reels are not stopped, then stop
-            if (!stopped)
+            if (!fullyStopped)
             {  
-                Stop(); 
+                Stop();
             }
         }
     } 
@@ -100,7 +104,7 @@ public class Reel : MonoBehaviour
     {
         // Indicate that the reels have started to spin
         isSpinning = true;
-        stopped = false;
+        //fullyStopped = false;
 
         for (int i = 0; i < icons.Length; i++)
         {
@@ -132,19 +136,16 @@ public class Reel : MonoBehaviour
                 symbolIndex = Random.Range(0, symbols.Length);
                 icons[i].GetComponent<SpriteRenderer>().sprite = symbols[symbolIndex];
             }
-        } 
-
-        // Dispatch START event
-        if (ReelStarted != null)
-        {
-            ReelStarted();
-        }
+        }  
     }
      
 
     // Start landing animation
     private void StartLanding()
-    { 
+    {
+        fullyStopped = false;
+        temp += Time.fixedDeltaTime;
+
         // Get reference to the object
         currentIcon = icons[topMostIndex];
 
@@ -163,23 +164,27 @@ public class Reel : MonoBehaviour
         // Change the reel status to stop
         isSpinning = false;
 
-        //Debug.Log(currentYpos + "       " +  landingPos); 
         /*
          * This is the point where the reels have completely landed/stopped
          * Signal/flag STOP to halt spinning
          */
-        if (currentYpos == landingPos)
-        { 
-            stopped = true;  
-        } 
 
-        // Dispatch STOP event
-        if (ReelStopped != null)
+        if (currentYpos == landingPos)
         {
-            ReelStopped();
+            landingTime = temp;
+            temp = 0f;
+
+            fullyStopped = true;
+
+            Debug.Log("STOPPPPPPPPPPPPPPPED");
+
+            // Dispatch STOP event
+            if (ReelStopped != null)
+            {
+                ReelStopped();
+            }
         }
     } 
-
 
     // PUBLIC METHODS
     public void Spin()
@@ -193,9 +198,14 @@ public class Reel : MonoBehaviour
         StartLanding();
     }
 
-    public bool hasStopped()
+    public bool HasStopped()
     {
-        return stopped;
+        return fullyStopped;
+    }
+
+    public float GetLandingTime()
+    {
+        return landingTime;
     }
 
 }

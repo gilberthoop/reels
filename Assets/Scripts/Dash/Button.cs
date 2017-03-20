@@ -50,8 +50,7 @@ public class Button : MonoBehaviour, IPointerClickHandler
             // Dispatch spin event when button is clicked
             if (ClickToSpin != null)
             {
-                ClickToSpin(); 
-                Debug.Log("SPIN");
+                ClickToSpin();  
             }
             else
             {
@@ -63,13 +62,12 @@ public class Button : MonoBehaviour, IPointerClickHandler
         else
         {
             // Toggle button frame 
-            gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
+            //gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
              
             // Dispatch stop event when button is clicked
             if (ClickToStop != null)
             {
-                ClickToStop(); 
-                Debug.Log("STOP");
+                ClickToStop();  
             }
             else
             {
@@ -84,11 +82,13 @@ public class Button : MonoBehaviour, IPointerClickHandler
     // PUBLIC METHODS 
     public void Enable()
     {
+        gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
 
     public void Disable()
     {
+        gameObject.GetComponent<SpriteRenderer>().sprite = stopUp;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
 } 

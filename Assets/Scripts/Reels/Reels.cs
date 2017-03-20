@@ -5,9 +5,8 @@ using UnityEngine;
 public class Reels : MonoBehaviour
 {
 
-    public delegate void ReelsHandler(); 
-    public event ReelsHandler Spinning;
-    public event ReelsHandler Stopping;
+    public delegate void ReelsHandler();  
+    public event ReelsHandler Stop;
 
     // Reels components
     public Reel[] reels;
@@ -15,12 +14,9 @@ public class Reels : MonoBehaviour
     private Reel currentReel;
 
 
-    void Start()
-    {
-        for (int i = 0; i < reels.Length; i++)
-        {
-            currentReel = reels[i];  
-        }
+    void OnEnable()
+    { 
+        currentReel.ReelStopped += ReelStopHandler;
     }
 
 
@@ -30,73 +26,69 @@ public class Reels : MonoBehaviour
         for (int i = 0; i < reels.Length; i++)
         {
             currentReel = reels[i];
-            currentReel.Spin();
-        }
-
-        // Dispatch start event
-        if (Spinning != null)
-        {
-            Spinning();
+            currentReel.Spin(); 
         }
     } 
 
 
     // Set up the landing and stop animation for the reels
     private void ReelStopHandler()
-    {
+    { 
         for (int i = 0; i < reels.Length; i++)
         {
             currentReel = reels[i];
             currentReel.Stop();
-        }
 
-        // Dispatch stop event
-        if (Stopping != null)
-        {
-            Stopping();
-        }
-    }
-
-    // Check if reels have stopped
-    private bool IsStopping()
-    {
-        bool stopStatus = false;
-        for (int i = 0; i < reels.Length; i++)
-        {
-            currentReel = reels[i];
-            stopStatus = currentReel.hasStopped();
-        }
-        return stopStatus;
-    }
-     
-
-    void OnEnable()
-    {
-        currentReel.ReelStarted += ReelStartHandler;
-        currentReel.ReelStopped += ReelStopHandler; 
+            //  Dispatch stop event
+            if (Stop != null)
+            {
+                Stop();
+            }
+        }  
     } 
 
     void OnDisable()
-    {  
-        currentReel.ReelStarted -= ReelStartHandler;
+    {   
         currentReel.ReelStopped -= ReelStopHandler; 
     }
 
      
     // PUBLIC METHODS
-    public void Spin()
+    public void Spinning()
     {
         ReelStartHandler();
     }
 
-    public void Stop()
+    public void Stopping()
     {
         ReelStopHandler();
     }
 
-    public bool HasStopped()
+    public float GetLandingTime()
     {
-        return IsStopping();
+        float landingTime = 0f;
+
+        for (int i = 0; i < reels.Length; i++)
+        {
+            currentReel = reels[i];
+            landingTime = currentReel.GetLandingTime();
+        }
+
+        return landingTime;
+    }
+
+
+    public bool Stopped()
+    {
+        bool IsStopped = false;
+
+        for (int i = 0; i < reels.Length; i++)
+        {
+            currentReel = reels[i];
+            IsStopped = currentReel.HasStopped();
+        }
+
+        return IsStopped;
     }
 
 }

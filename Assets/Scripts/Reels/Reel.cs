@@ -4,12 +4,10 @@ using System.Security.Policy;
 using UnityEngine;
 
 public class Reel : MonoBehaviour
-{ 
-
-    // Delegates and events
-    public delegate void ReelHandler();   
-    public event ReelHandler ReelStopped;
-     
+{
+    public delegate bool ReelStateHandler(); 
+    public event ReelStateHandler FullyStopped;
+    
     // Reel components (icons/sprites)
     public SpriteRenderer[] icons; 
     public Sprite[] symbols;
@@ -37,19 +35,23 @@ public class Reel : MonoBehaviour
 
     // Reel status
     private bool isSpinning;
-    private bool fullyStopped; 
+    private bool fullyStopped;  
+
 
 
     // Initialize reel components
     void Awake()
-    {  
+    {   
         speed = 25f; 
         smoothTime = 0.3f;
         iconHeight = 3f;
         topBound = 6f;
         bottomBound = topBound - iconHeight * 4;
         yVelocity = 0.0f;
+
+        // Is the reel spinning in the beginning?
         isSpinning = false;
+        // Is the reel fully stopped in the beginning?
         fullyStopped = true; 
 
         SetIcon(symbols);
@@ -100,6 +102,8 @@ public class Reel : MonoBehaviour
     {
         // Indicate that the reels have started to spin
         isSpinning = true; 
+        // Is the reel fully stopped?
+        fullyStopped = false;
 
         for (int i = 0; i < icons.Length; i++)
         {
@@ -159,18 +163,16 @@ public class Reel : MonoBehaviour
 
         /*
          * This is the point where the reels have completely landed/stopped
-         * Signal/flag STOP to halt spinning
          */
-
         if (currentYpos == landingPos)
         {  
-            fullyStopped = true; 
+            fullyStopped = true;   
 
-            // Dispatch STOP event
-            if (ReelStopped != null)
+            // Dispatch reel stopped state event
+            if (FullyStopped != null)
             {
-                ReelStopped();
-            } 
+                FullyStopped();
+            }
         } 
     } 
 

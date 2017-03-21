@@ -27,8 +27,8 @@ public class Button : MonoBehaviour, IPointerClickHandler
         // Render the spin button  
         gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;  
 
-        // Set initial spin status to false and stopped status to true
-        spinStatus = false; 
+        // Can the button be clicked to spin the reels?
+        spinStatus = true; 
     }
 
     
@@ -42,22 +42,15 @@ public class Button : MonoBehaviour, IPointerClickHandler
          * Toggle spin button (ON and OFF frames)
          * Dispatch Spin and Stop events
          */
-        if (!spinStatus)
-        {
-            // Toggle button frame 
-            gameObject.GetComponent<SpriteRenderer>().sprite = stopUp;
-             
+        if (spinStatus)
+        { 
             // Dispatch spin event when button is clicked
             if (ClickToSpin != null)
             {
                 ClickToSpin();  
-            }
-            else
-            {
-                Debug.Log("Event cannot be dispatched. Event is null");
-            }
+            } 
 
-            spinStatus = true;
+            spinStatus = false;
         }
         else
         {  
@@ -65,27 +58,28 @@ public class Button : MonoBehaviour, IPointerClickHandler
             if (ClickToStop != null)
             {
                 ClickToStop();  
-            }
-            else
-            {
-                Debug.Log("Event cannot be dispatched. Event is null");
-            }
+            } 
 
-            spinStatus = false;
+            spinStatus = true;
         } 
     }  
 
 
     // PUBLIC METHODS 
-    public void Enable()
+    public void SpinFrame()
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
 
+    public void StopFrame()
+    {
+        gameObject.GetComponent<SpriteRenderer>().sprite = stopUp; 
+    }
+
     public void Disable()
     {
-        gameObject.GetComponent<SpriteRenderer>().sprite = stopUp;
+        Debug.Log("EHEY"); 
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
 } 

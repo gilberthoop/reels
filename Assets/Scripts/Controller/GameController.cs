@@ -15,11 +15,17 @@ public class GameController : MonoBehaviour
     // Add event listeners
     void Start()
     {
-        // Subscribe handlers to events
-        button.ClickToSpin += new Button.ButtonHandler(ButtonSpinHandler);
-        button.ClickToStop += new Button.ButtonHandler(ButtonStopHandler); 
-        reels.Spin += new Reels.ReelsHandler(ReelSpinHandler);
-        reels.Stop += new Reels.ReelsHandler(ReelStopHandler);  
+        /*
+         * Subscribe handlers to events
+         */
+        // Button handlers
+        button.ClickToSpin += ButtonSpinHandler;
+        button.ClickToStop += ButtonStopHandler;
+
+        // Reel handlers
+        reels.Spin += ReelSpinHandler;
+        reels.DisableSpin += ReelDisableSpinHandler;
+        reels.FullStop += ReelStopHandler;
     } 
 
 
@@ -33,29 +39,30 @@ public class GameController : MonoBehaviour
     // Button handler for stopping/landing
     private void ButtonStopHandler()
     {
-        reels.Stopping();
+        reels.Stopping(); 
     }
 
 
     // Reel handler when reels are spinning
     private void ReelSpinHandler()
     {
-        button.StopFrame();
+        button.StopFrame(); 
     }
 
 
-    // Reel handler when reels are landing/stopping
-    private void ReelStopHandler()
+    // reel handler when reels are landing/stopping
+    private void ReelDisableSpinHandler()
     {
         button.Disable();
-        Debug.Log("DISABLED");
-
-        if (!reels.IsMoving())
-        {
-            button.SpinFrame();
-            Debug.Log("ENABLED");
-        } 
     }
+
+
+    // Reel handler when reels have stopped
+    private void ReelStopHandler()
+    { 
+        button.SpinFrame();
+    }
+
 
     // Unsubscribe handlers to events
     void OnDisable()
@@ -63,7 +70,8 @@ public class GameController : MonoBehaviour
         button.ClickToSpin -= ButtonSpinHandler;
         button.ClickToStop -= ButtonStopHandler;
         reels.Spin -= ReelSpinHandler;
-        reels.Stop -= ReelStopHandler; 
+        reels.DisableSpin -= ReelDisableSpinHandler;
+        reels.FullStop -= ReelStopHandler; 
     } 
      
 }

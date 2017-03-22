@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Reel : MonoBehaviour
 {
-    public delegate bool ReelStateHandler(); 
+    public delegate void ReelStateHandler(); 
     public event ReelStateHandler FullyStopped;
     
     // Reel components (icons/sprites)
@@ -31,12 +31,10 @@ public class Reel : MonoBehaviour
     private float endPoint;
     private float landingPos;  
     private float currentYpos; 
-
-
+    
     // Reel status
     private bool isSpinning;
     private bool fullyStopped;  
-
 
 
     // Initialize reel components
@@ -71,7 +69,7 @@ public class Reel : MonoBehaviour
             // Check if reels are not stopped, then stop
             if (!fullyStopped)
             {  
-                Stop();
+                Stop(); 
             }
         }
     } 
@@ -166,12 +164,16 @@ public class Reel : MonoBehaviour
          */
         if (currentYpos == landingPos)
         {  
-            fullyStopped = true;   
+            fullyStopped = true; 
 
             // Dispatch reel stopped state event
             if (FullyStopped != null)
             {
-                FullyStopped();
+                FullyStopped(); 
+            }
+            else
+            {
+                Debug.Log("FullyStopped event is null");
             }
         } 
     } 

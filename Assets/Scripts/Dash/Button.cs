@@ -47,8 +47,12 @@ public class Button : MonoBehaviour, IPointerClickHandler
             // Dispatch spin event when button is clicked
             if (ClickToSpin != null)
             {
-                ClickToSpin();  
-            } 
+                ClickToSpin();
+            }
+            else
+            {
+                Debug.Log("clickToSpin event is null");
+            }
 
             spinStatus = false;
         }
@@ -57,8 +61,12 @@ public class Button : MonoBehaviour, IPointerClickHandler
             // Dispatch stop event when button is clicked
             if (ClickToStop != null)
             {
-                ClickToStop();  
-            } 
+                ClickToStop();
+            }
+            else
+            {
+                Debug.Log("ClickToStop event is null");
+            }
 
             spinStatus = true;
         } 
@@ -78,8 +86,7 @@ public class Button : MonoBehaviour, IPointerClickHandler
     }
 
     public void Disable()
-    {
-        Debug.Log("EHEY"); 
+    { 
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
 } 

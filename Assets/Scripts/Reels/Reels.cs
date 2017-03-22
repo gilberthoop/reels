@@ -7,41 +7,25 @@ public class Reels : MonoBehaviour
 
     public delegate void ReelsHandler();
     public event ReelsHandler Spin;
-    public event ReelsHandler Stop; 
+    public event ReelsHandler DisableSpin;
+    public event ReelsHandler FullStop;
 
     // Reels components
     public Reel[] reels;
     private Reel currentReel;
     private Reel reel1, reel2, reel3;
 
-    private bool isMoving;
-    private bool isStopping;
-     
 
-    // Initialize each reel
-    void Start()
-    { 
+    void Awake()
+    {
         reel1 = reels[0];
         reel2 = reels[1];
         reel3 = reels[2];
-         
-        // Are the reels moving?
-        isMoving = false;
 
-        // Has the reels run
-        isStopping = false;
+        reel1.FullyStopped += CompleteStopHandler;
+        reel2.FullyStopped += CompleteStopHandler;
+        reel3.FullyStopped += CompleteStopHandler;
     }
-
-    // Update the status of reels
-    void Update()
-    {   
-        if (isStopping)
-        {
-            ReelStatusHandler();
-            //Debug.Log(ReelStatusHandler()); 
-        }
-    }
-
 
     // Set up the spin idle animation for the reels
     private void SpinReels()
@@ -55,102 +39,59 @@ public class Reels : MonoBehaviour
         // Dispatch Spin event
         if (Spin != null)
         {
-            Spin();
+            Spin(); 
+            Debug.Log("Reels are spinnning");
         }
-        // Reels moving
-        isMoving = true;
-        isStopping = false;
-
-        Debug.Log("running, is moving:  " + isMoving);
+        else
+        {
+            Debug.Log("Spin event is null");
+        }
     } 
 
 
     // Set up the landing and stop animation for the reels
     private void StopReels()
     {
+        bool fullStop = false;
         for (int i = 0; i < reels.Length; i++)
         { 
             currentReel = reels[i];
-            currentReel.Stop();
+            currentReel.Stop(); 
         }
 
-        // Reels will stop but still moving
-        isMoving = true;
-        isStopping = true;
-
-        Debug.Log("STOPPING, is moving:    " + isMoving);
+        // Dispatch Disable Spin event
+        if (DisableSpin != null)
+        {
+            DisableSpin();
+        }
+        else
+        {
+            Debug.Log("DisableSpin event is null");
+        }
     }
 
 
-    // Handler to check if reels have COMPLETELY stopped
-    private bool ReelStatusHandler()
+    // Handler when all reels have stopped 
+    private void CompleteStopHandler()
     {
-        // Reels have completely stopped 
-        //isMoving = true; 
-
-        if (AllStopped())
+        if (FullStop != null)
         {
-            // Dispatch full stop event 
-            if (Stop != null)
-            {
-                Stop(); 
-            }
+            FullStop();
+            Debug.Log("All reels have completely stopped");
         }
-
-        Debug.Log("All stopped, is moving:   " + isMoving);
-
-        return AllStopped();
-    }
-     
-
-    // Verify that the reels have fully stopped
-    private bool AllStopped()
-    {
-        bool fullyStopped = false;
-
-        for (int i = 0; i < reels.Length; i++)
+        else
         {
-            currentReel = reels[i];
-            fullyStopped = currentReel.HasStopped(); 
-        }
-
-        if (fullyStopped)
-        { 
-            // Reels have completely stopped 
-            isMoving = false;
-            //isStopping = true;
-        }
-
-        return fullyStopped;
-    }
-
-
-    // Subscribe handlers to events
-    void OnEnable()
-    {
-
-        if (reel1 != null)
-        {
-            reel1.FullyStopped += ReelStatusHandler;
-        }
-
-        if (reel2 != null)
-        {
-            reel2.FullyStopped += ReelStatusHandler;
-        }
-
-        if (reel3 != null)
-        {
-            reel3.FullyStopped += ReelStatusHandler;
+            Debug.Log("FullStop event is null");
         }
     }
+    
 
     // Unubscribe handlers to events
     void OnDisable()
     {
-        reel1.FullyStopped -= ReelStatusHandler;
-        reel2.FullyStopped -= ReelStatusHandler;
-        reel3.FullyStopped -= ReelStatusHandler;
+        reel1.FullyStopped -= CompleteStopHandler;
+        reel2.FullyStopped -= CompleteStopHandler;
+        reel3.FullyStopped -= CompleteStopHandler;
     }
 
 
@@ -162,12 +103,6 @@ public class Reels : MonoBehaviour
 
     public void Stopping()
     {
-        StopReels();
-    }
-
-    public bool IsMoving()
-    {
-        return isMoving; 
-    }
-
+        StopReels(); 
+    } 
 }

@@ -33,7 +33,7 @@ public class Reel : MonoBehaviour
     private float currentYpos; 
     
     // Reel status
-    private bool isSpinning;
+    private bool canSpin;
     private bool fullyStopped;  
 
 
@@ -47,11 +47,12 @@ public class Reel : MonoBehaviour
         bottomBound = topBound - iconHeight * 4;
         yVelocity = 0.0f;
 
-        // Is the reel spinning in the beginning?
-        isSpinning = false;
+        // Can the reel spin in the beginning?
+        canSpin = false;
         // Is the reel fully stopped in the beginning?
-        fullyStopped = true; 
+        fullyStopped = true;
 
+        // Create initial set of icons
         SetIcon(symbols);
     }
 
@@ -59,17 +60,16 @@ public class Reel : MonoBehaviour
     // Execute spin idling and landing animation controlled by flags
     void Update()
     {
-        // If the spin signal is true, start spinning
-        if (isSpinning)
+        // If reel can spin, start spinning
+        if (canSpin)
         {
             Spin();
         }
         else
         {
-            // Check if reels are not stopped, then stop
             if (!fullyStopped)
-            {  
-                Stop(); 
+            {
+                Stop();
             }
         }
     } 
@@ -99,8 +99,9 @@ public class Reel : MonoBehaviour
     private void RenderIcons(float speed)
     {
         // Indicate that the reels have started to spin
-        isSpinning = true; 
-        // Is the reel fully stopped?
+        canSpin = true;
+
+        // The reels are now moving
         fullyStopped = false;
 
         for (int i = 0; i < icons.Length; i++)
@@ -132,15 +133,13 @@ public class Reel : MonoBehaviour
                 symbolIndex = Random.Range(0, symbols.Length);
                 icons[i].GetComponent<SpriteRenderer>().sprite = symbols[symbolIndex];
             }
-        }  
+        } 
     }
-     
+
 
     // Start landing animation
     private void StartLanding()
-    {
-        fullyStopped = false; 
-
+    { 
         // Get reference to the object
         currentIcon = icons[topMostIndex];
 
@@ -157,15 +156,13 @@ public class Reel : MonoBehaviour
         RenderIcons(currentYpos - landingPos); 
 
         // Change the reel status to stop
-        isSpinning = false;
+        canSpin = false;
 
         /*
          * This is the point where the reels have completely landed/stopped
          */
         if (currentYpos == landingPos)
-        {  
-            fullyStopped = true; 
-
+        {   
             // Dispatch reel stopped state event
             if (FullyStopped != null)
             {
@@ -188,11 +185,6 @@ public class Reel : MonoBehaviour
     public void Stop()
     {
         StartLanding();
-    }
-
-    public bool HasStopped()
-    {
-        return fullyStopped;
     } 
 
 }

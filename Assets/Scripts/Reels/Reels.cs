@@ -16,16 +16,19 @@ public class Reels : MonoBehaviour
     private Reel reel1, reel2, reel3;
 
 
+    // Initialize Reels components
     void Awake()
     {
         reel1 = reels[0];
         reel2 = reels[1];
         reel3 = reels[2];
 
+        // Add Stop handlers to the event of each reel
         reel1.FullyStopped += CompleteStopHandler;
         reel2.FullyStopped += CompleteStopHandler;
         reel3.FullyStopped += CompleteStopHandler;
     }
+
 
     // Set up the spin idle animation for the reels
     private void SpinReels()
@@ -74,6 +77,7 @@ public class Reels : MonoBehaviour
     // Handler when all reels have stopped 
     private void CompleteStopHandler()
     {
+        // Dispatch Full Stop event
         if (FullStop != null)
         {
             FullStop();
@@ -86,7 +90,7 @@ public class Reels : MonoBehaviour
     }
     
 
-    // Unubscribe handlers to events
+    // Unubscribe handlers from events
     void OnDisable()
     {
         reel1.FullyStopped -= CompleteStopHandler;

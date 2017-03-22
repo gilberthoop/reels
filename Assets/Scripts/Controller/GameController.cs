@@ -40,14 +40,21 @@ public class GameController : MonoBehaviour
     // Reel handler when reels are spinning
     private void ReelSpinHandler()
     {
-        button.StopFrame();  
+        button.StopFrame();
     }
 
 
     // Reel handler when reels are landing/stopping
     private void ReelStopHandler()
-    { 
-        button.SpinFrame();
+    {
+        button.Disable();
+        Debug.Log("DISABLED");
+
+        if (!reels.IsMoving())
+        {
+            button.SpinFrame();
+            Debug.Log("ENABLED");
+        } 
     }
 
     // Unsubscribe handlers to events

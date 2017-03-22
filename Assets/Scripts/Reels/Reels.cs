@@ -14,7 +14,8 @@ public class Reels : MonoBehaviour
     private Reel currentReel;
     private Reel reel1, reel2, reel3;
 
-    //private bool isMoving; 
+    private bool isMoving;
+    private bool isStopping;
      
 
     // Initialize each reel
@@ -24,12 +25,21 @@ public class Reels : MonoBehaviour
         reel2 = reels[1];
         reel3 = reels[2];
          
+        // Are the reels moving?
+        isMoving = false;
+
+        // Has the reels run
+        isStopping = false;
     }
 
     // Update the status of reels
     void Update()
-    {  
-        ReelStatusHandler();
+    {   
+        if (isStopping)
+        {
+            ReelStatusHandler();
+            //Debug.Log(ReelStatusHandler()); 
+        }
     }
 
 
@@ -46,7 +56,12 @@ public class Reels : MonoBehaviour
         if (Spin != null)
         {
             Spin();
-        } 
+        }
+        // Reels moving
+        isMoving = true;
+        isStopping = false;
+
+        Debug.Log("running, is moving:  " + isMoving);
     } 
 
 
@@ -57,13 +72,22 @@ public class Reels : MonoBehaviour
         { 
             currentReel = reels[i];
             currentReel.Stop();
-        } 
+        }
+
+        // Reels will stop but still moving
+        isMoving = true;
+        isStopping = true;
+
+        Debug.Log("STOPPING, is moving:    " + isMoving);
     }
 
 
     // Handler to check if reels have COMPLETELY stopped
     private bool ReelStatusHandler()
-    { 
+    {
+        // Reels have completely stopped 
+        //isMoving = true; 
+
         if (AllStopped())
         {
             // Dispatch full stop event 
@@ -72,6 +96,8 @@ public class Reels : MonoBehaviour
                 Stop(); 
             }
         }
+
+        Debug.Log("All stopped, is moving:   " + isMoving);
 
         return AllStopped();
     }
@@ -85,8 +111,15 @@ public class Reels : MonoBehaviour
         for (int i = 0; i < reels.Length; i++)
         {
             currentReel = reels[i];
-            fullyStopped = currentReel.HasStopped();
-        } 
+            fullyStopped = currentReel.HasStopped(); 
+        }
+
+        if (fullyStopped)
+        { 
+            // Reels have completely stopped 
+            isMoving = false;
+            //isStopping = true;
+        }
 
         return fullyStopped;
     }
@@ -134,8 +167,7 @@ public class Reels : MonoBehaviour
 
     public bool IsMoving()
     {
-        //return isMoving;
-        return true;
+        return isMoving; 
     }
 
 }

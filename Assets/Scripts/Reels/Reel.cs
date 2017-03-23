@@ -6,7 +6,7 @@ using UnityEngine;
 public class Reel : MonoBehaviour
 {
     public delegate void ReelStateHandler(); 
-    public event ReelStateHandler FullyStopped;
+    public event ReelStateHandler OnFullStop;
     
     // Reel components (icons/sprites)
     public SpriteRenderer[] icons; 
@@ -164,13 +164,13 @@ public class Reel : MonoBehaviour
         if (currentYpos == landingPos)
         {   
             // Dispatch reel stopped state event
-            if (FullyStopped != null)
+            if (OnFullStop != null)
             {
-                FullyStopped(); 
+                OnFullStop(); 
             }
             else
             {
-                Debug.Log("FullyStopped event is null");
+                Debug.Log("OnFullStop event is null");
             }
         } 
     } 

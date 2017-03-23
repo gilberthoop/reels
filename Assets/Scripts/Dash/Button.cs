@@ -11,8 +11,8 @@ public class Button : MonoBehaviour, IPointerClickHandler
     [HideInInspector]
     public delegate void ButtonHandler();
     [HideInInspector]
-    public event ButtonHandler ClickToSpin;
-    public event ButtonHandler ClickToStop;
+    public event ButtonHandler OnClickSpin;
+    public event ButtonHandler OnClickStop;
 
     // Spin buttom frames or skins
     public Sprite spinUp;
@@ -45,9 +45,9 @@ public class Button : MonoBehaviour, IPointerClickHandler
         if (spinStatus)
         { 
             // Dispatch spin event when button is clicked
-            if (ClickToSpin != null)
+            if (OnClickSpin != null)
             {
-                ClickToSpin();
+                OnClickSpin();
             }
             else
             {
@@ -59,13 +59,13 @@ public class Button : MonoBehaviour, IPointerClickHandler
         else
         {  
             // Dispatch stop event when button is clicked
-            if (ClickToStop != null)
+            if (OnClickStop != null)
             {
-                ClickToStop();
+                OnClickStop();
             }
             else
             {
-                Debug.Log("ClickToStop event is null");
+                Debug.Log("OnClickStop event is null");
             }
 
             spinStatus = true;
@@ -77,16 +77,18 @@ public class Button : MonoBehaviour, IPointerClickHandler
      * PUBLIC METHODS 
      */
     // Change the button frame to SPIN
-    public void SpinFrame()
+    public void ChangeToSpinFrame()
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
         gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
     }
+
     // Change the button frame to STOP
-    public void StopFrame()
+    public void ChangeToStopFrame()
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = stopUp; 
     }
+
     // Disable the button
     public void Disable()
     { 

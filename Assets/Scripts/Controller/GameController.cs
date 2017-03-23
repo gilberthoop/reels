@@ -19,59 +19,43 @@ public class GameController : MonoBehaviour
          * Subscribe handlers to events
          */
         // Button handlers
-        button.ClickToSpin += ButtonSpinHandler;
-        button.ClickToStop += ButtonStopHandler;
+        button.OnClickSpin += ButtonClickSpinHandler;
+        button.OnClickStop += ButtonStopHandler;
 
-        // Reel handlers
-        reels.Spin += ReelSpinHandler;
-        reels.DisableSpin += ReelDisableSpinHandler;
-        reels.FullStop += ReelStopHandler;
+        // Reel handlers 
+        reels.OnReelsFullStop += ReelStopHandler;
     } 
 
 
     // Button handler for spinning
-    private void ButtonSpinHandler()
+    private void ButtonClickSpinHandler()
     {
-        reels.Spinning(); 
+        reels.Spin();
+        button.ChangeToStopFrame();
     }
 
 
     // Button handler for stopping/landing
     private void ButtonStopHandler()
     {
-        reels.Stopping(); 
-    }
-
-
-    // Reel handler when reels are spinning
-    private void ReelSpinHandler()
-    {
-        button.StopFrame(); 
-    }
-
-
-    // reel handler when reels are landing/stopping
-    private void ReelDisableSpinHandler()
-    {
+        reels.Stop();
         button.Disable();
     }
-
+     
 
     // Reel handler when reels have stopped
     private void ReelStopHandler()
     { 
-        button.SpinFrame();
+        button.ChangeToSpinFrame();
     }
 
 
     // Unsubscribe handlers to events
     void OnDisable()
     {
-        button.ClickToSpin -= ButtonSpinHandler;
-        button.ClickToStop -= ButtonStopHandler;
-        reels.Spin -= ReelSpinHandler;
-        reels.DisableSpin -= ReelDisableSpinHandler;
-        reels.FullStop -= ReelStopHandler; 
+        button.OnClickSpin -= ButtonClickSpinHandler;
+        button.OnClickStop -= ButtonStopHandler; 
+        reels.OnReelsFullStop -= ReelStopHandler; 
     } 
      
 }

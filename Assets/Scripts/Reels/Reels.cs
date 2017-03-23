@@ -5,10 +5,8 @@ using UnityEngine;
 public class Reels : MonoBehaviour
 {
 
-    public delegate void ReelsHandler();
-    public event ReelsHandler Spin;
-    public event ReelsHandler DisableSpin;
-    public event ReelsHandler FullStop;
+    public delegate void ReelsHandler(); 
+    public event ReelsHandler OnReelsFullStop;
 
     // Reels components
     public Reel[] reels;
@@ -24,9 +22,9 @@ public class Reels : MonoBehaviour
         reel3 = reels[2];
 
         // Add Stop handlers to the event of each reel
-        reel1.FullyStopped += CompleteStopHandler;
-        reel2.FullyStopped += CompleteStopHandler;
-        reel3.FullyStopped += CompleteStopHandler;
+        reel1.OnFullStop += CompleteStopHandler;
+        reel2.OnFullStop += CompleteStopHandler;
+        reel3.OnFullStop += CompleteStopHandler;
     }
 
 
@@ -37,18 +35,7 @@ public class Reels : MonoBehaviour
         {
             currentReel = reels[i];
             currentReel.Spin();
-        }
-
-        // Dispatch Spin event
-        if (Spin != null)
-        {
-            Spin(); 
-            Debug.Log("Reels are spinnning");
-        }
-        else
-        {
-            Debug.Log("Spin event is null");
-        }
+        } 
     } 
 
 
@@ -60,28 +47,17 @@ public class Reels : MonoBehaviour
         { 
             currentReel = reels[i];
             currentReel.Stop(); 
-        }
-
-        // Dispatch Disable Spin event
-        if (DisableSpin != null)
-        {
-            DisableSpin();
-        }
-        else
-        {
-            Debug.Log("DisableSpin event is null");
-        }
+        } 
     }
 
 
     // Handler when all reels have stopped 
     private void CompleteStopHandler()
-    {
+    { 
         // Dispatch Full Stop event
-        if (FullStop != null)
+        if (OnReelsFullStop != null)
         {
-            FullStop();
-            Debug.Log("All reels have completely stopped");
+            OnReelsFullStop();
         }
         else
         {
@@ -93,19 +69,19 @@ public class Reels : MonoBehaviour
     // Unubscribe handlers from events
     void OnDisable()
     {
-        reel1.FullyStopped -= CompleteStopHandler;
-        reel2.FullyStopped -= CompleteStopHandler;
-        reel3.FullyStopped -= CompleteStopHandler;
+        reel1.OnFullStop -= CompleteStopHandler;
+        reel2.OnFullStop -= CompleteStopHandler;
+        reel3.OnFullStop -= CompleteStopHandler;
     }
 
 
     // PUBLIC METHODS
-    public void Spinning()
+    public void Spin()
     {
         SpinReels();
     }
 
-    public void Stopping()
+    public void Stop()
     {
         StopReels(); 
     } 

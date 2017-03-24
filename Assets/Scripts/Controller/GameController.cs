@@ -18,19 +18,20 @@ public class GameController : MonoBehaviour
         /*
          * Subscribe handlers to events
          */
+        // Reel handlers 
+        reels.OnReelsFullStop += ReelStopHandler;
+         
         // Button handlers
         button.OnClickSpin += ButtonClickSpinHandler;
         button.OnClickStop += ButtonStopHandler;
-
-        // Reel handlers 
-        reels.OnReelsFullStop += ReelStopHandler;
     } 
 
 
     // Button handler for spinning
     private void ButtonClickSpinHandler()
     {
-        reels.Spin();
+        // Start spinning & Change button to stop frame
+        reels.Spin(); 
         button.ChangeToStopFrame();
     }
 
@@ -38,15 +39,18 @@ public class GameController : MonoBehaviour
     // Button handler for stopping/landing
     private void ButtonStopHandler()
     {
-        reels.Stop();
+        // Disable the button & Start landing animation 
         button.Disable();
+        reels.Stop();  
     }
      
 
     // Reel handler when reels have stopped
     private void ReelStopHandler()
-    { 
-        button.ChangeToSpinFrame();
+    {
+        // Enable the button & Change the button to spin frame
+        button.Enable();
+        button.ChangeToSpinFrame();   
     }
 
 

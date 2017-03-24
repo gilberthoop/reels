@@ -79,7 +79,6 @@ public class Button : MonoBehaviour, IPointerClickHandler
     // Change the button frame to SPIN
     public void ChangeToSpinFrame()
     {
-        gameObject.GetComponent<BoxCollider2D>().enabled = true;
         gameObject.GetComponent<SpriteRenderer>().sprite = spinUp;
     }
 
@@ -87,6 +86,12 @@ public class Button : MonoBehaviour, IPointerClickHandler
     public void ChangeToStopFrame()
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = stopUp; 
+    }
+
+    // Enable the button
+    public void Enable()
+    {
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
 
     // Disable the button

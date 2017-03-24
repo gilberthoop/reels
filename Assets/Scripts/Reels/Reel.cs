@@ -8,6 +8,8 @@ public class Reel : MonoBehaviour
     public delegate void ReelStateHandler(); 
     public event ReelStateHandler OnFullStop;
     
+    //public delegate
+    
     // Reel components (icons/sprites)
     public SpriteRenderer[] icons; 
     public Sprite[] symbols;
@@ -34,7 +36,8 @@ public class Reel : MonoBehaviour
     
     // Reel status
     private bool canSpin;
-    private bool fullyStopped;  
+    private bool isSpinning;
+    private bool stopped;
 
 
     // Initialize reel components
@@ -44,20 +47,24 @@ public class Reel : MonoBehaviour
         smoothTime = 0.3f;
         iconHeight = 3f;
         topBound = 6f;
-        bottomBound = topBound - iconHeight * 4;
+        //bottomBound = topBound - iconHeight * 4;      Causes extra spin if the bottom icon hits this bound exactly. Need a small margin
+        bottomBound = (topBound - iconHeight * 4) - 0.000001f;    
         yVelocity = 0.0f;
 
-        // Can the reel spin in the beginning?
+        // Current state of the reel
+        stopped = true;
+        // Can the reel spin at start up?
         canSpin = false;
-        // Is the reel fully stopped in the beginning?
-        fullyStopped = true;
+        // Is the reel spinning at start up?
+        isSpinning = false;
 
         // Create initial set of icons
-        SetIcon(symbols);
+        SetIcon(symbols); 
     }
 
 
     // Execute spin idling and landing animation controlled by flags
+    // Do not call Stop function inside because it dispatches the full stop event
     void Update()
     {
         // If reel can spin, start spinning
@@ -67,11 +74,12 @@ public class Reel : MonoBehaviour
         }
         else
         {
-            if (!fullyStopped)
+            if (isSpinning)
             {
-                Stop();
+                Stop(); 
             }
-        }
+
+        }  
     } 
 
     // Create initial set of icons
@@ -100,9 +108,10 @@ public class Reel : MonoBehaviour
     {
         // Indicate that the reels have started to spin
         canSpin = true;
+        stopped = false;
 
         // The reels are now moving
-        fullyStopped = false;
+        isSpinning = true; 
 
         for (int i = 0; i < icons.Length; i++)
         {
@@ -139,7 +148,7 @@ public class Reel : MonoBehaviour
 
     // Start landing animation
     private void StartLanding()
-    { 
+    {  
         // Get reference to the object
         currentIcon = icons[topMostIndex];
 
@@ -153,16 +162,20 @@ public class Reel : MonoBehaviour
         landingPos = Mathf.SmoothDamp(currentYpos, endPoint, ref yVelocity, smoothTime);
 
         // Gradually decrease idling speed until it reaches the "endpoint"   
-        RenderIcons(currentYpos - landingPos); 
+        RenderIcons(currentYpos - landingPos);
 
         // Change the reel status to stop
-        canSpin = false;
+        canSpin = false;  
 
         /*
          * This is the point where the reels have completely landed/stopped
          */
         if (currentYpos == landingPos)
-        {   
+        {
+            // The reel is no longer spinning
+            isSpinning = false;
+            stopped = true;
+
             // Dispatch reel stopped state event
             if (OnFullStop != null)
             {
@@ -171,9 +184,10 @@ public class Reel : MonoBehaviour
             else
             {
                 Debug.Log("OnFullStop event is null");
-            }
-        } 
-    } 
+            } 
+        }
+    }  
+
 
     // PUBLIC METHODS
     public void Spin()
@@ -185,6 +199,13 @@ public class Reel : MonoBehaviour
     public void Stop()
     {
         StartLanding();
-    } 
+
+    }
+
+    public bool HasStopped()
+    {
+        return stopped;
+    }
+
 
 }

@@ -12,6 +12,7 @@ public class Reels : MonoBehaviour
     public Reel[] reels;
     private Reel currentReel;
     private Reel reel1, reel2, reel3;
+    private bool stopped;
 
 
     // Initialize Reels components
@@ -25,43 +26,58 @@ public class Reels : MonoBehaviour
         reel1.OnFullStop += CompleteStopHandler;
         reel2.OnFullStop += CompleteStopHandler;
         reel3.OnFullStop += CompleteStopHandler;
+
+        stopped = true;
     }
 
 
     // Set up the spin idle animation for the reels
     private void SpinReels()
-    { 
-        for (int i = 0; i < reels.Length; i++)
-        {
-            currentReel = reels[i];
-            currentReel.Spin();
-        } 
+    {  
+        reel1.Spin();
+        reel2.Spin();
+        reel3.Spin();
     } 
 
 
     // Set up the landing and stop animation for the reels
     private void StopReels()
-    {
-        bool fullStop = false;
+    {   
+        reel1.Stop();
+        reel2.Stop();
+        reel3.Stop();
+    }
+
+
+    // Helper method to check the current moving status of reels
+    private bool CheckStatus()
+    { 
         for (int i = 0; i < reels.Length; i++)
         { 
             currentReel = reels[i];
-            currentReel.Stop(); 
-        } 
+            stopped = currentReel.HasStopped(); 
+        }  
+
+        return stopped;
     }
 
 
     // Handler when all reels have stopped 
     private void CompleteStopHandler()
-    { 
-        // Dispatch Full Stop event
-        if (OnReelsFullStop != null)
+    {
+        // All reels need to be completely stopped before dispatching the event 
+        if (CheckStatus())
         {
-            OnReelsFullStop();
-        }
-        else
-        {
-            Debug.Log("FullStop event is null");
+            // Dispatch Full Stop event
+            if (OnReelsFullStop != null)
+            {
+                OnReelsFullStop();
+                Debug.Log("ALL REELS ARE STOPPED!");
+            }
+            else
+            {
+                Debug.Log("FullStop event is null");
+            }
         }
     }
     
@@ -71,8 +87,8 @@ public class Reels : MonoBehaviour
     {
         reel1.OnFullStop -= CompleteStopHandler;
         reel2.OnFullStop -= CompleteStopHandler;
-        reel3.OnFullStop -= CompleteStopHandler;
-    }
+        reel3.OnFullStop -= CompleteStopHandler; 
+    } 
 
 
     // PUBLIC METHODS
@@ -83,6 +99,6 @@ public class Reels : MonoBehaviour
 
     public void Stop()
     {
-        StopReels(); 
+        StopReels();
     } 
 }

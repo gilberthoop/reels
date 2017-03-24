@@ -1,12 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Policy;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Reel : MonoBehaviour
 {
     public delegate void ReelStateHandler(); 
-    public event ReelStateHandler OnFullStop;
+    //public event ReelStateHandler OnFullStop;
+
+    public event EventHandler OnFullStop;
     
     //public delegate
     
@@ -46,9 +50,8 @@ public class Reel : MonoBehaviour
         speed = 25f; 
         smoothTime = 0.3f;
         iconHeight = 3f;
-        topBound = 6f;
-        //bottomBound = topBound - iconHeight * 4;      Causes extra spin if the bottom icon hits this bound exactly. Need a small margin
-        bottomBound = (topBound - iconHeight * 4) - 0.000001f;    
+        topBound = 6f; 
+        bottomBound = (topBound - iconHeight * 4);   
         yVelocity = 0.0f;
 
         // Current state of the reel
@@ -179,13 +182,15 @@ public class Reel : MonoBehaviour
             // Dispatch reel stopped state event
             if (OnFullStop != null)
             {
-                OnFullStop(); 
+                OnFullStop(this, EventArgs.Empty); 
             }
             else
             {
                 Debug.Log("OnFullStop event is null");
             } 
         }
+
+        Debug.Log("HHHEEEEEEHHHH********");
     }  
 
 

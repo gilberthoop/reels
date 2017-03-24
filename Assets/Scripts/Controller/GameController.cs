@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +14,7 @@ public class GameController : MonoBehaviour
 
 
     // Add event listeners
-    void Start()
+    void Awake()
     {
         /*
          * Subscribe handlers to events
@@ -46,7 +47,7 @@ public class GameController : MonoBehaviour
      
 
     // Reel handler when reels have stopped
-    private void ReelStopHandler()
+    private void ReelStopHandler(object sender, EventArgs eventArgs)
     {
         // Enable the button & Change the button to spin frame
         button.Enable();

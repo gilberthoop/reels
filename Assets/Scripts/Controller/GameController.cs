@@ -9,8 +9,9 @@ public class GameController : MonoBehaviour
 { 
 
     // Game controller components
-    public Button button;
-    public Reels reels;
+    [Header("Game Components")]
+    [SerializeField] private Button button;
+    [SerializeField] private Reels reels;
 
 
     // Add event listeners
@@ -44,10 +45,11 @@ public class GameController : MonoBehaviour
         button.Disable();
         reels.Stop();  
     }
-     
+
 
     // Reel handler when reels have stopped
-    private void ReelStopHandler(object sender, EventArgs eventArgs)
+    //    private void ReelStopHandler(object sender, EventArgs eventArgs)
+    private void ReelStopHandler()
     {
         // Enable the button & Change the button to spin frame
         button.Enable();

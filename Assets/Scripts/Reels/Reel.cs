@@ -6,13 +6,10 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Reel : MonoBehaviour
-{
-    public delegate void ReelStateHandler(); 
-    //public event ReelStateHandler OnFullStop;
+{  
+    //public event ReelsHandler OnFullStop;
 
-    public event EventHandler OnFullStop;
-    
-    //public delegate
+    public Action OnFullStop;
     
     // Reel components (icons/sprites)
     public SpriteRenderer[] icons; 
@@ -48,7 +45,7 @@ public class Reel : MonoBehaviour
     void Awake()
     {   
         speed = 25f; 
-        smoothTime = 0.3f;
+        smoothTime = 0.15f;
         iconHeight = 3f;
         topBound = 6f; 
         bottomBound = (topBound - iconHeight * 4);   
@@ -181,16 +178,14 @@ public class Reel : MonoBehaviour
 
             // Dispatch reel stopped state event
             if (OnFullStop != null)
-            {
-                OnFullStop(this, EventArgs.Empty); 
+            { 
+                OnFullStop(); 
             }
             else
             {
                 Debug.Log("OnFullStop event is null");
             } 
-        }
-
-        Debug.Log("HHHEEEEEEHHHH********");
+        } 
     }  
 
 

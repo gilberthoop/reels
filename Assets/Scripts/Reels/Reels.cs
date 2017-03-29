@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//public delegate void ReelsHandler();
+
 public class Reels : MonoBehaviour
 {
 
-    public delegate void ReelsHandler(); 
     //public event ReelsHandler OnReelsFullStop;
-    public event EventHandler OnReelsFullStop;
+    public Action OnReelsFullStop;
 
 
     // Reels components
@@ -66,7 +67,8 @@ public class Reels : MonoBehaviour
 
 
     // Handler when all reels have stopped 
-    private void CompleteStopHandler(object sender, EventArgs eventArgs)
+    //private void CompleteStopHandler(object sender, EventArgs eventArgs)
+    private void CompleteStopHandler()
     {
         // All reels need to be completely stopped before dispatching the event 
         if (CheckStatus())
@@ -74,8 +76,9 @@ public class Reels : MonoBehaviour
             // Dispatch Full Stop event
             if (OnReelsFullStop != null)
             {
-                OnReelsFullStop(sender, eventArgs);
+                //OnReelsFullStop(sender, eventArgs);
                 //Debug.Log("Sender object: " + sender); 
+                OnReelsFullStop();
             }
             else
             {

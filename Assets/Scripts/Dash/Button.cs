@@ -8,11 +8,15 @@ using UnityEngine.EventSystems;
 public class Button : MonoBehaviour, IPointerClickHandler
 {
 
-    [HideInInspector]
+    /*
+     * [HideInInspector]
     public delegate void ButtonHandler();
     [HideInInspector]
     public event ButtonHandler OnClickSpin;
     public event ButtonHandler OnClickStop;
+    */
+    public Action OnClickSpin;
+    public Action OnClickStop;
 
     // Spin buttom frames or skins
     public Sprite spinUp;
@@ -48,11 +52,7 @@ public class Button : MonoBehaviour, IPointerClickHandler
             if (OnClickSpin != null)
             {
                 OnClickSpin();
-            }
-            else
-            {
-                Debug.Log("clickToSpin event is null");
-            }
+            } 
 
             spinStatus = false;
         }
@@ -62,11 +62,7 @@ public class Button : MonoBehaviour, IPointerClickHandler
             if (OnClickStop != null)
             {
                 OnClickStop();
-            }
-            else
-            {
-                Debug.Log("OnClickStop event is null");
-            }
+            } 
 
             spinStatus = true;
         } 
